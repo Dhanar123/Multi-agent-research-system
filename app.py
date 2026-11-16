@@ -500,6 +500,10 @@ if st.session_state.running and not st.session_state.done:
         results["search"] = sr["messages"][-1].content
         st.session_state.results = dict(results)
 
+    # Wait for Groq rate limit window to reset (free tier: 1000 OTPM)
+    with st.spinner("⏳ Waiting for rate limit cooldown (65s)…"):
+        time.sleep(65)
+
     # ── Step 2: Reader ──
     with st.spinner("📄 Reader Agent is scraping top resources…"):
 
@@ -517,6 +521,10 @@ if st.session_state.running and not st.session_state.done:
         results["reader"] = rr["messages"][-1].content
         st.session_state.results = dict(results)
 
+    # Wait for Groq rate limit window to reset
+    with st.spinner("⏳ Waiting for rate limit cooldown (65s)…"):
+        time.sleep(65)
+
     # ── Step 3: Writer ──
     with st.spinner("✍️ Writer is drafting the report…"):
 
@@ -531,6 +539,10 @@ if st.session_state.running and not st.session_state.done:
         })
 
         st.session_state.results = dict(results)
+
+    # Wait for Groq rate limit window to reset
+    with st.spinner("⏳ Waiting for rate limit cooldown (65s)…"):
+        time.sleep(65)
 
     # ── Step 4: Critic ──
     with st.spinner("🧐 Critic is reviewing the report…"):

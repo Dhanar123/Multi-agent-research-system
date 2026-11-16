@@ -18,16 +18,18 @@ except Exception:
     pass
 
 # Model Initialization with Groq
-# Default model: llama-3.3-70b-versatile (fast, 128k context, strong tool use & reasoning)
+# Default model: qwen/qwen3.8-27b (currently active on Groq, 131K context, strong tool calling)
+# Other available models: openai/gpt-oss-20b, openai/gpt-oss-120b
 groq_api_key = os.getenv("GROQ_API_KEY") or os.getenv("OPENAI_API_KEY", "")
-groq_model = os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile")
+groq_model = os.getenv("GROQ_MODEL", "qwen/qwen3.8-27b")
 
 try:
     from langchain_groq import ChatGroq
     llm = ChatGroq(
         model=groq_model,
         groq_api_key=groq_api_key or "gsk_dummy",
-        temperature=0
+        temperature=0,
+        max_tokens=900,
     )
 except ImportError:
     from langchain_openai import ChatOpenAI
@@ -35,7 +37,8 @@ except ImportError:
         model=groq_model,
         api_key=groq_api_key or "gsk_dummy",
         base_url="https://api.groq.com/openai/v1",
-        temperature=0
+        temperature=0,
+        max_tokens=900,
     )
 
 

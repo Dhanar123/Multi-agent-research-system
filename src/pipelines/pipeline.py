@@ -1,3 +1,4 @@
+import time
 from src.agents.agents import build_search_agent, build_reader_agent, writer_chain, critic_chain
 
 def run_research_pipeline(topic : str) -> dict:
@@ -17,6 +18,9 @@ def run_research_pipeline(topic : str) -> dict:
 
     print("\n search result ",state['search_results'])
 
+    # Wait for Groq rate limit window to reset (free tier: 1000 OTPM)
+    print("\n⏳ Waiting 65s for rate limit cooldown...")
+    time.sleep(65)
 
     #step 2 - reader agent 
     print("\n"+" ="*50)
@@ -36,6 +40,9 @@ def run_research_pipeline(topic : str) -> dict:
 
     print("\nscraped content: \n", state['scraped_content'])
 
+    # Wait for Groq rate limit window to reset
+    print("\n⏳ Waiting 65s for rate limit cooldown...")
+    time.sleep(65)
 
     #step 3 - writer chain 
 
@@ -55,6 +62,9 @@ def run_research_pipeline(topic : str) -> dict:
 
     print("\n Final Report\n",state['report'])
 
+    # Wait for Groq rate limit window to reset
+    print("\n⏳ Waiting 65s for rate limit cooldown...")
+    time.sleep(65)
 
     #critic report 
 
